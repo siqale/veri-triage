@@ -1,6 +1,6 @@
 {
   "name": "veri_triage",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Um sistema avançado de triagem clínica *Role-Based* (RBAC) impulsionado por Inteligência Artificial Generativa e orquestração de agentes. Construído sob rigorosos padrões de engenharia de software (Spec-Driven Development), governança corporativa e em conformidade com o Privacy by Design (LGPD).",
   "main": "index.js",
   "directories": {

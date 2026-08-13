@@ -1,4 +1,8 @@
-# Changelog (VeriTriage AI)
+# Changelog
+
+## 0.0.1 (2026-08-13)
+
+(VeriTriage AI)
 
 Todas as alterações notáveis deste projeto serão documentadas neste arquivo. 
 O formato é baseado no [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
