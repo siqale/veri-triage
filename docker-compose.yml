@@ -1,0 +1,55 @@
+services:
+  # ==========================================
+  # AMBIENTE DE TESTES / DESENVOLVIMENTO
+  # Rode com: docker compose --profile dev up
+  # ==========================================
+  api-dev:
+    build:
+      context: .
+    image: very_triage_api:dev
+    profiles: ["dev"]
+    ports:
+      - "8000:8000"
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2:-true}
+      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+      - LANGCHAIN_PROJECT=${LANGCHAIN_PROJECT:-veritriage}
+    # Volume mapeado: hot-reload do código e volume de dados do SQLite
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    networks:
+      - veritriage_internal
+    # Sobrescreve o CMD para ativar o hot-reload do uvicorn
+    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # ==========================================
+  # AMBIENTE DE PRODUÇÃO
+  # Rode com: docker compose --profile prod up
+  # ==========================================
+  api-prod:
+    build:
+      context: .
+    image: very_triage_api:prod
+    profiles: ["prod"]
+    expose:
+      - "8000"
+    environment:
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2:-true}
+      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+      - LANGCHAIN_PROJECT=${LANGCHAIN_PROJECT:-veritriage-prod}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_DEPLOYMENT=${AZURE_OPENAI_DEPLOYMENT}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION}
+    # Volumes: Apenas a pasta de dados do SQLite, garantindo persistência sem ferir a imutabilidade do código
+    volumes:
+      - ./data:/app/data
+    networks:
+      - veritriage_internal
+
+networks:
+  veritriage_internal:
+    driver: bridge

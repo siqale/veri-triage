@@ -1,0 +1,74 @@
+[
+  {
+    "category": "Dor Torácica",
+    "symptoms": ["dor torácica irradiando para o braço esquerdo", "dor no peito forte", "aperto no peito", "sudorese e dor no peito"],
+    "risk": "Vermelho",
+    "guideline": "Suspeita de Síndrome Coronariana Aguda. Risco de vida imediato. Requer ECG em menos de 10 minutos."
+  },
+  {
+    "category": "Sangramento Ativo",
+    "symptoms": ["sangramento arterial", "hemorragia incontrolável", "sangramento maciço"],
+    "risk": "Vermelho",
+    "guideline": "Choque hemorrágico provável. Intervenção cirúrgica ou de compressão imediata."
+  },
+  {
+    "category": "Comprometimento Respiratório",
+    "symptoms": ["falta de ar severa", "saturação menor que 90%", "cianose", "respiração ruidosa (estridor)"],
+    "risk": "Vermelho",
+    "guideline": "Insuficiência respiratória aguda. Necessidade de oxigênio imediato e possível intubação."
+  },
+  {
+    "category": "Alteração Neurológica",
+    "symptoms": ["paralisia facial súbita", "déficit motor súbito", "fala arrastada", "perda de consciência não recuperada"],
+    "risk": "Vermelho",
+    "guideline": "Possível AVC (Acidente Vascular Cerebral). Ativação de protocolo de trombolítico."
+  },
+  {
+    "category": "Dor Forte",
+    "symptoms": ["dor intensa", "dor escala 8 a 10"],
+    "risk": "Laranja",
+    "guideline": "Avaliação médica urgente (até 10 minutos). Administrar analgesia rápida."
+  },
+  {
+    "category": "Febre em Imunossuprimidos",
+    "symptoms": ["febre alta", "paciente oncológico com febre"],
+    "risk": "Laranja",
+    "guideline": "Risco de neutropenia febril e sepse. Coleta de culturas e antibiótico na primeira hora."
+  },
+  {
+    "category": "Dor Abdominal Severa",
+    "symptoms": ["dor abdominal aguda", "abdome em tábua"],
+    "risk": "Laranja",
+    "guideline": "Possível abdome agudo cirúrgico. Avaliação urgente por cirurgião."
+  },
+  {
+    "category": "Febre Comum",
+    "symptoms": ["febre sem calafrios", "dor no corpo comum"],
+    "risk": "Amarelo",
+    "guideline": "Paciente requer avaliação até 60 minutos. Sem sinais de choque ou comprometimento grave."
+  },
+  {
+    "category": "Desidratação Leve",
+    "symptoms": ["vômitos esporádicos", "diarreia leve sem sangue"],
+    "risk": "Amarelo",
+    "guideline": "Avaliar sinais vitais. Hidratação oral ou endovenosa se intolerância gástrica."
+  },
+  {
+    "category": "Dor de Cabeça Moderada",
+    "symptoms": ["dor de cabeça", "cefaleia leve a moderada", "dor de cabeça tensional"],
+    "risk": "Verde",
+    "guideline": "Caso não urgente. Avaliação médica até 120 minutos. Administrar analgésicos."
+  },
+  {
+    "category": "Sintomas Gripais Leves",
+    "symptoms": ["tosse", "coriza", "espirros"],
+    "risk": "Verde",
+    "guideline": "Caso não urgente. Avaliação médica até 120 minutos."
+  },
+  {
+    "category": "Troca de Receita",
+    "symptoms": ["renovação de receita", "atestado médico simples"],
+    "risk": "Azul",
+    "guideline": "Não urgente. Atendimento ambulatorial preferencialmente."
+  }
+]
