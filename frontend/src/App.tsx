@@ -90,7 +90,10 @@ export default function App() {
     try {
       const res = await fetch(`${API_URL}/triage/start`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-API-Key': 'sua_senha_secreta_aqui'
+        },
         body: JSON.stringify({ patient_text: patientText })
       });
       
@@ -149,7 +152,10 @@ export default function App() {
     try {
       const res = await fetch(`${API_URL}/triage/resume/${selectedForDoctor.thread_id}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-API-Key': 'sua_senha_secreta_aqui'
+        },
         body: JSON.stringify({ 
           approved_risk: selectedForDoctor.suggestedRisk || 'Indefinido',
           doctor_id: 'CRM-123456',
@@ -181,7 +187,11 @@ export default function App() {
   const handleRunQA = async () => {
     setQaLoading(true);
     try {
-      const res = await fetch(`${API_URL}/triage/eval-harness`);
+      const res = await fetch(`${API_URL}/triage/eval-harness`, {
+        headers: {
+          'X-API-Key': 'sua_senha_secreta_aqui'
+        }
+      });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Erro ao rodar QA Harness');
       

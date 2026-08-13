@@ -24,6 +24,23 @@ services:
     # Sobrescreve o CMD para ativar o hot-reload do uvicorn
     command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - veritriage_internal
+    profiles:
+      - prod
+
   # ==========================================
   # AMBIENTE DE PRODUÇÃO
   # Rode com: docker compose --profile prod up
@@ -47,8 +64,15 @@ services:
     # Volumes: Apenas a pasta de dados do SQLite, garantindo persistência sem ferir a imutabilidade do código
     volumes:
       - ./data:/app/data
+    env_file:
+      - .env
     networks:
       - veritriage_internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`localhost`) || Host(`api.veritriage.local`)"
+      - "traefik.http.routers.api.entrypoints=web"
+      - "traefik.http.services.api.loadbalancer.server.port=8000"
 
 networks:
   veritriage_internal:

@@ -65,6 +65,20 @@ npm run dev
 ```
 Acesse `http://localhost:5173` no navegador.
 
+### 🚢 Governança e Deploy (CI/CD)
+
+**Arquitetura Multi-Cloud (Evitando Vendor Lock-in)**
+Todo o roteamento de LLMs foi unificado utilizando o padrão *Factory* (`src/core/llm.py`), permitindo que a aplicação transite transparentemente entre Azure AI Foundry (padrão corporativo) ou instâncias locais/OpenAI, dependendo unicamente de variáveis de ambiente.
+
+**Versionamento Semântico Automatizado**
+Visando esteiras de CI/CD limpas, o projeto adota o padrão **Conventional Commits** pareado com o `release-it`. Em vez de editar as versões manualmente, a governança ocorre com 1 clique:
+```bash
+npm run release
+```
+Iso analisa os commits (feat, fix), faz o *bump* dinâmico das tags no Git, atualiza as strings de versão do Python (FastAPI) e do Node (React) simultaneamente e autogera o arquivo `CHANGELOG.md` sem intervenção humana.
+
+---
+
 ### ✅ Executando a Suíte de Testes (QA & Security)
 A garantia de qualidade no VeriTriage não é baseada em *olhômetro*. Nós validamos as barreiras de injeção de prompt e o mascaramento LGPD de forma puramente determinística utilizando Pytest em containers isolados.
 

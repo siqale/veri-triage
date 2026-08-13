@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import uuid
 import os
@@ -12,15 +12,31 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Dynamic CORS Configuration
+env = os.getenv("ENVIRONMENT", "dev")
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
+allowed_origins = ["*"] if env == "dev" else [frontend_url]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.post("/triage/start", response_model=TriageResponseStart, status_code=202)
+async def verify_api_key(x_api_key: str = Header(default=None)):
+    """Verifica a API Key apenas em ambiente de produção ou testes de segurança"""
+    expected_key = os.getenv("API_SECRET_KEY", "sua_senha_secreta_aqui")
+    
+    # Se estamos em dev e a chave não foi enviada, permitimos (para facilitar testes manuais locais se quiser)
+    # Mas em produção (ou se o teste enviar um header incorreto), exigimos a validação.
+    if env == "prod" or x_api_key is not None:
+        if x_api_key != expected_key:
+            raise HTTPException(status_code=401, detail="Unauthorized: Invalid or missing API Key")
+
+@app.post("/triage/start", response_model=TriageResponseStart, status_code=202, dependencies=[Depends(verify_api_key)])
 async def start_triage(payload: TriageInput):
     """Inicia o fluxo de triagem no LangGraph."""
     
@@ -62,7 +78,7 @@ async def start_triage(payload: TriageInput):
     return response
 
 
-@app.post("/triage/resume/{thread_id}", response_model=TriageResponseFinish)
+@app.post("/triage/resume/{thread_id}", response_model=TriageResponseFinish, dependencies=[Depends(verify_api_key)])
 async def resume_triage(thread_id: str, payload: TriageResume):
     """Retoma o fluxo do LangGraph (Nó 3 e 4) injetando a decisão do médico."""
     
@@ -96,7 +112,7 @@ async def resume_triage(thread_id: str, payload: TriageResume):
         fhir_status=final_state.values.get("fhir_status", "Erro de integração")
     )
 
-@app.get("/triage/eval-harness")
+@app.get("/triage/eval-harness", dependencies=[Depends(verify_api_key)])
 async def evaluate_harness():
     """
     Roda a avaliação determinística baseada no dataset (QA Harness).

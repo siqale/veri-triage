@@ -1,0 +1,30 @@
+{
+  "name": "veri_triage",
+  "version": "1.0.0",
+  "description": "Um sistema avançado de triagem clínica *Role-Based* (RBAC) impulsionado por Inteligência Artificial Generativa e orquestração de agentes. Construído sob rigorosos padrões de engenharia de software (Spec-Driven Development), governança corporativa e em conformidade com o Privacy by Design (LGPD).",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "release-it"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siqale/veri-triage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/siqale/veri-triage/issues"
+  },
+  "homepage": "https://github.com/siqale/veri-triage#readme",
+  "devDependencies": {
+    "@release-it/bumper": "^7.0.6",
+    "@release-it/conventional-changelog": "^11.0.1",
+    "release-it": "^20.2.1"
+  }
+}
